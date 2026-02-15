@@ -2,20 +2,35 @@
 <meta charset="utf-8">
 <title>Bibliothèque de Clémentine</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-<style>
+<!-- <style>
     thead {position:fixed; top: 0; left: 0; }
     thead th, tfoot th { width: 100em; }
     tfoot {position:fixed; bottom: 0; left: 0; }
-</style>
+</style> -->
 
 <table class="table table-hover table-dark table-striped">
     <thead>
         <tr>
             <th>
+                Couverture
+            </th>
+            <th>
                 Titre
             </th>
             <th>
-                Authors
+                Auteur(s)
+            </th>
+            <th>
+                Genres
+            </th>
+            <th>
+                Année
+            </th>
+            <th>
+                BD
+            </th>
+            <th>
+                Lu
             </th>
         </tr>
     </thead>
@@ -47,12 +62,59 @@
         for(i=0;i<books.length;i++) {
             const new_tr = document.createElement("TR");
             maTable.appendChild(new_tr);
-            const new_td1 = document.createElement("TD");
-            const new_td2 = document.createElement("TD");
-            new_tr.appendChild(new_td1);
-            new_tr.appendChild(new_td2);
-            new_td1.innerText = books[i]["title"];
-            new_td2.innerText = books[i]["authors"];
+            {
+                const new_td = document.createElement("TD");
+                new_tr.appendChild(new_td);
+                const isbn = books[i]["isbn"];
+
+                const new_anchor = document.createElement("A");
+                new_td.appendChild(new_anchor);
+                new_anchor.setAttribute("href", "https://covers.openlibrary.org/b/ISBN/" + isbn + "-L.jpg");
+
+                const new_image = document.createElement("IMG");
+                new_anchor.appendChild(new_image);
+                new_image.setAttribute("src", "https://covers.openlibrary.org/b/ISBN/" + isbn + "-S.jpg");
+            }
+            {
+                const new_td = document.createElement("TD");
+                new_tr.appendChild(new_td);
+                new_td.innerText = books[i]["title"];
+            }
+            {
+                const new_td = document.createElement("TD");
+                new_tr.appendChild(new_td);
+                new_td.innerText = books[i]["authors"];
+            }
+            {
+                const new_td = document.createElement("TD");
+                new_tr.appendChild(new_td);
+                new_td.innerText = books[i]["genres"];
+            }
+            {
+                const new_td = document.createElement("TD");
+                new_tr.appendChild(new_td);
+                new_td.innerText = books[i]["publication_year"];
+            }
+            {
+                const new_td = document.createElement("TD");
+                new_tr.appendChild(new_td);
+                const is_comic = books[i]["comic"];
+                if (is_comic) {
+                    new_td.innerText = "🗹";
+                } else {
+                    new_td.innerText = "☐";
+                }
+            }
+            {
+                const new_td = document.createElement("TD");
+                new_tr.appendChild(new_td);
+                const is_read = books[i]["read"];
+                if (is_read) {
+                    new_td.innerText = "🗹";
+                } else {
+                    new_td.innerText = "☐";
+                }
+            }
         }
 
         document.getElementById("footer").innerText = books.length;
