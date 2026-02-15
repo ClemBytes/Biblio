@@ -35,7 +35,7 @@
         <tr>
             <td></td>
             <td>
-                <input type="search" id="title-search">
+                <input type="search" id="title-search" oninput="updateTable()">
             </td>
             <td>
                 <input type="search" id="authors-search">
@@ -71,12 +71,17 @@
     function clicked(event) {
         console.log(event);
     }
-    
-    async function main() {
-        const response = await fetch("books.json");
-        const books = await response.json();
+
+    let unfiltered_books;
+
+    function updateTable() {
+        if (unfiltered_books === undefined) {
+            return;
+        }
+        const books = unfiltered_books.filter((book) => book["title"].includes(document.getElementById("title-search").value));
 
         const maTable = document.getElementById("ma-table");
+        maTable.replaceChildren();
 
         const started = Date.now();
         for (let i = 0; i < books.length; i++) {
@@ -144,6 +149,12 @@
 
         const elapsed = Date.now() - started;
         console.log(elapsed);
+    }
+    
+    async function main() {
+        const response = await fetch("books.json");
+        unfiltered_books = await response.json();
+        updateTable(unfiltered_books);
     }
 
     main();
