@@ -59,7 +59,7 @@
         const maTable = document.getElementById("ma-table");
 
         const started = Date.now();
-        for(i=0;i<books.length;i++) {
+        for(let i=0;i<books.length;i++) {
             const new_tr = document.createElement("TR");
             maTable.appendChild(new_tr);
             {
@@ -83,12 +83,12 @@
             {
                 const new_td = document.createElement("TD");
                 new_tr.appendChild(new_td);
-                new_td.innerText = books[i]["authors"];
+                new_td.innerText = books[i]["authors"].join(", ");
             }
             {
                 const new_td = document.createElement("TD");
                 new_tr.appendChild(new_td);
-                new_td.innerText = books[i]["genres"];
+                new_td.innerText = books[i]["genres"].join(", ");
             }
             {
                 const new_td = document.createElement("TD");
