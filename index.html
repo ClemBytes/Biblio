@@ -72,13 +72,17 @@
         console.log(event);
     }
 
+    function filter_book(book) {
+        return book["title"].includes(document.getElementById("title-search").value);
+    }
+
     let unfiltered_books;
 
     function updateTable() {
         if (unfiltered_books === undefined) {
             return;
         }
-        const books = unfiltered_books.filter((book) => book["title"].includes(document.getElementById("title-search").value));
+        const books = unfiltered_books.filter(filter_book);
 
         const maTable = document.getElementById("ma-table");
         maTable.replaceChildren();
