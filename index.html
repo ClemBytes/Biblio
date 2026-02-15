@@ -68,13 +68,13 @@
 
 
 <script>
+    function clicked(event) {
+        console.log(event);
+    }
+    
     async function main() {
         const response = await fetch("books.json");
         const books = await response.json();
-
-        function clicked(event) {
-            console.log(event);
-        }
 
         const maTable = document.getElementById("ma-table");
 
