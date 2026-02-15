@@ -73,7 +73,9 @@
 
                 const new_image = document.createElement("IMG");
                 new_anchor.appendChild(new_image);
+                new_image.setAttribute("loading", "lazy");
                 new_image.setAttribute("src", "https://covers.openlibrary.org/b/ISBN/" + isbn + "-S.jpg");
+                new_image.setAttribute("height", "58px");
             }
             {
                 const new_td = document.createElement("TD");
