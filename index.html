@@ -38,13 +38,13 @@
                 <input type="search" id="title-search" oninput="updateTable()">
             </td>
             <td>
-                <input type="search" id="authors-search">
+                <input type="search" id="authors-search" oninput="updateTable()">
             </td>
             <td>
-                <input type="search" id="genres-search">
+                <input type="search" id="genres-search" oninput="updateTable()">
             </td>
             <td>
-                <input type="search" id="year-search">
+                <!-- <input type="search" id="year-search"> -->
             </td>
             <td>
                 BD
@@ -73,7 +73,21 @@
     }
 
     function filter_book(book) {
-        return book["title"].includes(document.getElementById("title-search").value);
+        if (!book["title"].includes(document.getElementById("title-search").value)) {
+            return false;
+        }
+        if (!book["authors"].some((author) => author.includes(document.getElementById("authors-search").value))) {
+            return false;
+        }
+        if (!book["genres"].some((author) => author.includes(document.getElementById("genres-search").value))) {
+            return false;
+        };
+        
+        // TODO: range
+        // if (!book["publication_year"].includes(document.getElementById("year-search").value)) {
+        //     return false;
+        // }
+        return true;
     }
 
     let unfiltered_books;
