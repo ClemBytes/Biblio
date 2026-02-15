@@ -76,13 +76,15 @@
         if (!book["title"].includes(document.getElementById("title-search").value)) {
             return false;
         }
-        if (!book["authors"].some((author) => author.includes(document.getElementById("authors-search").value))) {
+        const author_filter = document.getElementById("authors-search").value;
+        if (!book["authors"].some((author) => author.includes(author_filter))) {
             return false;
         }
-        if (!book["genres"].some((author) => author.includes(document.getElementById("genres-search").value))) {
+        const genres_filter = document.getElementById("genres-search").value;
+        if (!book["genres"].some((genre) => genre.includes(genres_filter))) {
             return false;
         };
-        
+
         // TODO: range
         // if (!book["publication_year"].includes(document.getElementById("year-search").value)) {
         //     return false;
