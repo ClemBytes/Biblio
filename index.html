@@ -2,8 +2,13 @@
 <meta charset="utf-8">
 <title>Bibliothèque de Clémentine</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<style>
+    thead {position:fixed; top: 0; left: 0; }
+    thead th, tfoot th { width: 100em; }
+    tfoot {position:fixed; bottom: 0; left: 0; }
+</style>
 
-<table class="table table-striped">
+<table class="table table-hover table-dark table-striped">
     <thead>
         <tr>
             <th>
@@ -16,6 +21,14 @@
     </thead>
     <tbody id="ma-table" onclick="clicked(event)">
     </tbody>
+    <tfoot>
+        <tr>
+            <th>
+                Nb lines
+            </th>
+            <th id="footer"></th>
+        </tr>
+    </tfoot>
 </table>
 
 
@@ -41,6 +54,8 @@
             new_td1.innerText = books[i]["title"];
             new_td2.innerText = books[i]["authors"];
         }
+
+        document.getElementById("footer").innerText = books.length;
 
         const elapsed = Date.now() - started;
         console.log(elapsed);
