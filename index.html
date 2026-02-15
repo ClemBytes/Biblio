@@ -79,13 +79,14 @@
         const maTable = document.getElementById("ma-table");
 
         const started = Date.now();
-        for(let i=0;i<books.length;i++) {
+        for (let i = 0; i < books.length; i++) {
+            const book = books[i];
             const new_tr = document.createElement("TR");
             maTable.appendChild(new_tr);
             {
                 const new_td = document.createElement("TD");
                 new_tr.appendChild(new_td);
-                const isbn = books[i]["isbn"];
+                const isbn = book["isbn"];
 
                 const new_anchor = document.createElement("A");
                 new_td.appendChild(new_anchor);
@@ -100,27 +101,27 @@
             {
                 const new_td = document.createElement("TD");
                 new_tr.appendChild(new_td);
-                new_td.innerText = books[i]["title"];
+                new_td.innerText = book["title"];
             }
             {
                 const new_td = document.createElement("TD");
                 new_tr.appendChild(new_td);
-                new_td.innerText = books[i]["authors"].join(", ");
+                new_td.innerText = book["authors"].join(", ");
             }
             {
                 const new_td = document.createElement("TD");
                 new_tr.appendChild(new_td);
-                new_td.innerText = books[i]["genres"].join(", ");
+                new_td.innerText = book["genres"].join(", ");
             }
             {
                 const new_td = document.createElement("TD");
                 new_tr.appendChild(new_td);
-                new_td.innerText = books[i]["publication_year"];
+                new_td.innerText = book["publication_year"];
             }
             {
                 const new_td = document.createElement("TD");
                 new_tr.appendChild(new_td);
-                const is_comic = books[i]["comic"];
+                const is_comic = book["comic"];
                 if (is_comic) {
                     new_td.innerText = "🗹";
                 } else {
@@ -130,7 +131,7 @@
             {
                 const new_td = document.createElement("TD");
                 new_tr.appendChild(new_td);
-                const is_read = books[i]["read"];
+                const is_read = book["read"];
                 if (is_read) {
                     new_td.innerText = "🗹";
                 } else {
