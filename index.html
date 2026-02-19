@@ -26,10 +26,10 @@
                 Année
             </th>
             <th>
-                BD
+                <label for="comic-check">BD</label>
             </th>
             <th>
-                Lu
+                <label for="read-search">Lu</label>
             </th>
         </tr>
         <tr>
@@ -47,11 +47,11 @@
                 <!-- <input type="search" id="year-search"> -->
             </td>
             <td>
-                BD
+                <input type="checkbox" id="comic-check" oninput="updateComicCheck(event)">
             </td>
             <td>
-                Lu
-            </th>
+                <input type="checkbox" id="read-search" oninput="updateTable()">
+            </td>
         </tr>
     </thead>
     <tbody id="ma-table" onclick="clicked(event)">
@@ -72,6 +72,37 @@
         console.log(event);
     }
 
+    let boxComicState = "indeterminate";
+    const boxComic = document.getElementById("comic-check");
+    boxComic.checked = false;
+    boxComic.indeterminate = true;
+
+    function updateComicCheck(event) {
+        event.preventDefault();
+
+        if (boxComicState === "unchecked") {
+            // ☐ → -
+            // console.log("1");
+            boxComic.checked = false;
+            boxComic.indeterminate = true;
+            boxComicState = "indeterminate";
+        } else if (boxComicState === "indeterminate") {
+            // - → 🗹
+            // console.log("2");
+            boxComic.checked = true;
+            boxComic.indeterminate = false;
+            boxComicState = "checked";
+        } else if (boxComicState === "checked") {
+            // 🗹 → ☐
+            // console.log("3");
+            boxComic.checked = false;
+            boxComic.indeterminate = false;
+            boxComicState = "unchecked";
+        }
+
+        updateTable();
+    }
+
     function filter_book(book) {
         if (!book["title"].includes(document.getElementById("title-search").value)) {
             return false;
@@ -83,7 +114,18 @@
         const genres_filter = document.getElementById("genres-search").value;
         if (!book["genres"].some((genre) => genre.includes(genres_filter))) {
             return false;
-        };
+        }
+        if (boxComicState === "unchecked") {
+            // ☐
+            if (book["comic"]) {
+                return false;
+            }
+        } else if (boxComicState === "checked") {
+            // 🗹
+            if (!book["comic"]) {
+                return false;
+            }
+        }
 
         // TODO: range
         // if (!book["publication_year"].includes(document.getElementById("year-search").value)) {
@@ -170,7 +212,7 @@
         const elapsed = Date.now() - started;
         console.log(elapsed);
     }
-    
+
     async function main() {
         const response = await fetch("books.json");
         unfiltered_books = await response.json();
