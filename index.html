@@ -29,7 +29,7 @@
                 <label for="comic-check">BD</label>
             </th>
             <th>
-                <label for="read-search">Lu</label>
+                <label for="read-check">Lu</label>
             </th>
         </tr>
         <tr>
@@ -47,10 +47,10 @@
                 <!-- <input type="search" id="year-search"> -->
             </td>
             <td>
-                <input type="checkbox" id="comic-check" oninput="updateComicCheck(event)">
+                <input type="checkbox" id="comic-check" oninput="updateComicCheck(event, id='comic-check')">
             </td>
             <td>
-                <input type="checkbox" id="read-search" oninput="updateTable()">
+                <input type="checkbox" id="read-check" oninput="updateComicCheck(event, id='read-check')">
             </td>
         </tr>
     </thead>
@@ -77,44 +77,86 @@
     boxComic.checked = false;
     boxComic.indeterminate = true;
 
-    function updateComicCheck(event) {
+    let boxReadState = "indeterminate";
+    const boxRead = document.getElementById("read-check");
+    boxRead.checked = false;
+    boxRead.indeterminate = true;
+
+    function updateComicCheck(event, id) {
         event.preventDefault();
 
-        if (boxComicState === "unchecked") {
+        let box;
+        let state;
+
+        if (id === "comic-check") {
+            box = boxComic;
+            state = boxComicState;
+        } else if (id === "read-check") {
+            box = boxRead;
+            state = boxReadState;
+        } else {
+            console.log("Unknown id: " + id);
+        }
+
+        if (state === "unchecked") {
             // ☐ → -
             // console.log("1");
-            boxComic.checked = false;
-            boxComic.indeterminate = true;
-            boxComicState = "indeterminate";
-        } else if (boxComicState === "indeterminate") {
+            box.checked = false;
+            box.indeterminate = true;
+            if (id === "comic-check") {
+                boxComicState = "indeterminate";
+            } else if (id === "read-check") {
+                boxReadState = "indeterminate";
+            }
+        } else if (state === "indeterminate") {
             // - → 🗹
             // console.log("2");
-            boxComic.checked = true;
-            boxComic.indeterminate = false;
-            boxComicState = "checked";
-        } else if (boxComicState === "checked") {
+            box.checked = true;
+            box.indeterminate = false;
+            if (id === "comic-check") {
+                boxComicState = "checked";
+            } else if (id === "read-check") {
+                boxReadState = "checked";
+            }
+        } else if (state === "checked") {
             // 🗹 → ☐
             // console.log("3");
-            boxComic.checked = false;
-            boxComic.indeterminate = false;
-            boxComicState = "unchecked";
+            box.checked = false;
+            box.indeterminate = false;
+            if (id === "comic-check") {
+                boxComicState = "unchecked";
+            } else if (id === "read-check") {
+                boxReadState = "unchecked";
+            }
         }
 
         updateTable();
     }
 
     function filter_book(book) {
+        // Titles
         if (!book["title"].includes(document.getElementById("title-search").value)) {
             return false;
         }
+
+        // Authors
         const author_filter = document.getElementById("authors-search").value;
         if (!book["authors"].some((author) => author.includes(author_filter))) {
             return false;
         }
+
+        // Genres
         const genres_filter = document.getElementById("genres-search").value;
         if (!book["genres"].some((genre) => genre.includes(genres_filter))) {
             return false;
         }
+
+        // TODO: range
+        // if (!book["publication_year"].includes(document.getElementById("year-search").value)) {
+        //     return false;
+        // }
+
+        // Comic
         if (boxComicState === "unchecked") {
             // ☐
             if (book["comic"]) {
@@ -127,10 +169,19 @@
             }
         }
 
-        // TODO: range
-        // if (!book["publication_year"].includes(document.getElementById("year-search").value)) {
-        //     return false;
-        // }
+        // Read
+        if (boxReadState === "unchecked") {
+            // ☐
+            if (book["read"]) {
+                return false;
+            }
+        } else if (boxReadState === "checked") {
+            // 🗹
+            if (!book["read"]) {
+                return false;
+            }
+        }
+
         return true;
     }
 
