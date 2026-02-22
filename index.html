@@ -2,33 +2,28 @@
 <meta charset="utf-8">
 <title>Bibliothèque de Clémentine</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-<!-- <style>
-    thead {position:fixed; top: 0; left: 0; }
-    thead th, tfoot th { width: 100em; }
-    tfoot {position:fixed; bottom: 0; left: 0; }
-</style> -->
 <style>td:first-child {text-align: center;}</style>
 
 <table class="table table-hover table-dark table-striped">
     <thead>
         <tr>
-            <th></th>
-            <th>
+            <th scope="col"></th>
+            <th scope="col">
                 <label for="title-search">Titre</label>
             </th>
-            <th>
+            <th scope="col">
                 <label for="authors-search">Auteur(s)</label>
             </th>
-            <th>
+            <th scope="col">
                 <label for="genres-search">Genres</label>
             </th>
-            <th>
+            <th scope="col">
                 Année
             </th>
-            <th>
+            <th scope="col">
                 <label for="comic-check">BD</label>
             </th>
-            <th>
+            <th scope="col">
                 <label for="read-check">Lu</label>
             </th>
         </tr>
@@ -54,11 +49,11 @@
             </td>
         </tr>
     </thead>
-    <tbody id="ma-table" onclick="clicked(event)">
+    <tbody id="ma-table">
     </tbody>
     <tfoot>
         <tr>
-            <th>
+            <th scope="col">
                 Nb lines
             </th>
             <th id="footer"></th>
@@ -68,10 +63,6 @@
 
 
 <script>
-    function clicked(event) {
-        console.log(event);
-    }
-
     // Initialize boxes view
     const boxComic = document.getElementById("comic-check");
     boxComic.checked = false;
@@ -165,7 +156,7 @@
 
     let unfiltered_books;
 
-    function updateTable() {
+    function updateTable(unfiltered_books) {
         if (unfiltered_books === undefined) {
             return;
         }
@@ -175,8 +166,7 @@
         maTable.replaceChildren();
 
         const started = Date.now();
-        for (let i = 0; i < books.length; i++) {
-            const book = books[i];
+        for (let book of books) {
             const new_tr = document.createElement("TR");
             maTable.appendChild(new_tr);
             {
