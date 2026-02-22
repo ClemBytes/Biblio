@@ -47,10 +47,10 @@
                 <!-- <input type="search" id="year-search"> -->
             </td>
             <td>
-                <input type="checkbox" id="comic-check" oninput="updateComicCheck(event, id='comic-check')">
+                <input type="checkbox" id="comic-check" data-state="indeterminate" oninput="updateComicCheck(event, id='comic-check')">
             </td>
             <td>
-                <input type="checkbox" id="read-check" oninput="updateComicCheck(event, id='read-check')">
+                <input type="checkbox" id="read-check" data-state="indeterminate" oninput="updateComicCheck(event, id='read-check')">
             </td>
         </tr>
     </thead>
@@ -72,12 +72,11 @@
         console.log(event);
     }
 
-    let boxComicState = "indeterminate";
+    // Initialize boxes view
     const boxComic = document.getElementById("comic-check");
     boxComic.checked = false;
     boxComic.indeterminate = true;
 
-    let boxReadState = "indeterminate";
     const boxRead = document.getElementById("read-check");
     boxRead.checked = false;
     boxRead.indeterminate = true;
@@ -85,49 +84,26 @@
     function updateComicCheck(event, id) {
         event.preventDefault();
 
-        let box;
-        let state;
+        let box = document.getElementById(id);
 
-        if (id === "comic-check") {
-            box = boxComic;
-            state = boxComicState;
-        } else if (id === "read-check") {
-            box = boxRead;
-            state = boxReadState;
-        } else {
-            console.log("Unknown id: " + id);
-        }
-
-        if (state === "unchecked") {
+        if (box.dataset.state === "unchecked") {
             // ☐ → -
             // console.log("1");
             box.checked = false;
             box.indeterminate = true;
-            if (id === "comic-check") {
-                boxComicState = "indeterminate";
-            } else if (id === "read-check") {
-                boxReadState = "indeterminate";
-            }
-        } else if (state === "indeterminate") {
+            box.dataset.state = "indeterminate";
+        } else if (box.dataset.state === "indeterminate") {
             // - → 🗹
             // console.log("2");
             box.checked = true;
             box.indeterminate = false;
-            if (id === "comic-check") {
-                boxComicState = "checked";
-            } else if (id === "read-check") {
-                boxReadState = "checked";
-            }
-        } else if (state === "checked") {
+            box.dataset.state = "checked";
+        } else if (box.dataset.state === "checked") {
             // 🗹 → ☐
             // console.log("3");
             box.checked = false;
             box.indeterminate = false;
-            if (id === "comic-check") {
-                boxComicState = "unchecked";
-            } else if (id === "read-check") {
-                boxReadState = "unchecked";
-            }
+            box.dataset.state = "unchecked";
         }
 
         updateTable();
@@ -157,6 +133,7 @@
         // }
 
         // Comic
+        const boxComicState = document.getElementById("comic-check").dataset.state;
         if (boxComicState === "unchecked") {
             // ☐
             if (book["comic"]) {
@@ -170,6 +147,7 @@
         }
 
         // Read
+        const boxReadState = document.getElementById("read-check").dataset.state;
         if (boxReadState === "unchecked") {
             // ☐
             if (book["read"]) {
