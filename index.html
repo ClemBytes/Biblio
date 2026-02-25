@@ -156,7 +156,7 @@
 
     let unfiltered_books;
 
-    function updateTable(unfiltered_books) {
+    function updateTable() {
         if (unfiltered_books === undefined) {
             return;
         }
@@ -235,7 +235,7 @@
     async function main() {
         const response = await fetch("books.json");
         unfiltered_books = await response.json();
-        updateTable(unfiltered_books);
+        updateTable();
     }
 
     main();
