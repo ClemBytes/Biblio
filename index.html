@@ -68,6 +68,9 @@
 
 
 <script>
+    // Max number of authors showed
+    const max_authors = 3;
+
     // Initialize boxes view
     const boxComic = document.getElementById("comic-check");
     boxComic.checked = false;
@@ -203,7 +206,14 @@
             {
                 const new_td = document.createElement("TD");
                 new_tr.appendChild(new_td);
-                new_td.innerText = book["authors"].join(", ");
+                const all_authors = book["authors"];
+                let authors_showed;
+                if (all_authors.length > max_authors) {
+                    authors_showed = all_authors.slice(0, max_authors).join(", ") + ", …";
+                } else {
+                    authors_showed = all_authors.join(", ");
+                }
+                new_td.innerText = authors_showed;
             }
             {
                 const new_td = document.createElement("TD");
