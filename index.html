@@ -30,22 +30,22 @@
         <tr>
             <td></td>
             <td>
-                <input type="search" id="title-search" oninput="updateTable()">
+                <input type="search" class="form-control" id="title-search" oninput="updateTable()">
             </td>
             <td>
-                <input type="search" id="authors-search" oninput="updateTable()">
+                <input type="search" class="form-control" id="authors-search" oninput="updateTable()">
             </td>
             <td>
-                <input type="search" id="genres-search" oninput="updateTable()">
+                <input type="search" class="form-control" id="genres-search" oninput="updateTable()">
             </td>
             <td>
                 <!-- <input type="search" id="year-search"> -->
             </td>
             <td>
-                <input type="checkbox" id="comic-check" data-state="indeterminate" oninput="updateComicCheck(event, id='comic-check')">
+                <input type="checkbox" class="form-check-input" id="comic-check" data-state="indeterminate" oninput="updateComicCheck(event, id='comic-check')">
             </td>
             <td>
-                <input type="checkbox" id="read-check" data-state="indeterminate" oninput="updateComicCheck(event, id='read-check')">
+                <input type="checkbox" class="form-check-input" id="read-check" data-state="indeterminate" oninput="updateComicCheck(event, id='read-check')">
             </td>
         </tr>
     </thead>
@@ -209,9 +209,9 @@
                 new_tr.appendChild(new_td);
                 const is_comic = book["comic"];
                 if (is_comic) {
-                    new_td.innerText = "🗹";
+                    new_td.innerHTML = "<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"checkCheckedDisabled\" aria-label=\"Not BD\" checked disabled>";
                 } else {
-                    new_td.innerText = "☐";
+                    new_td.innerHTML = "<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"checkDisabled\" aria-label=\"BD\" disabled>";
                 }
             }
             {
@@ -219,9 +219,9 @@
                 new_tr.appendChild(new_td);
                 const is_read = book["read"];
                 if (is_read) {
-                    new_td.innerText = "🗹";
+                    new_td.innerHTML = "<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"checkCheckedDisabled\" aria-label=\"Not Lu\" checked disabled>";
                 } else {
-                    new_td.innerText = "☐";
+                    new_td.innerHTML = "<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"checkDisabled\" aria-label=\"Lu\" disabled>";
                 }
             }
         }
