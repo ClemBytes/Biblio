@@ -39,7 +39,12 @@
                 <input type="search" class="form-control" id="genres-search" oninput="updateTable()">
             </td>
             <td>
-                <!-- <input type="search" id="year-search"> -->
+                <div class="input-group">
+                    <span class="input-group-text">Entre </span>
+                    <input type="number" class="form-control" id="year-search-inf" aria-label="apres" oninput="updateTable()">
+                    <span class="input-group-text"> et </span>
+                    <input type="number" class="form-control" id="year-search-sup" aria-label="avant" oninput="updateTable()">
+                </div>
             </td>
             <td>
                 <input type="checkbox" class="form-check-input" id="comic-check" data-state="indeterminate" oninput="updateComicCheck(event, id='comic-check')">
@@ -100,6 +105,22 @@
         updateTable();
     }
 
+    function filter_checks(box, book_info) {
+        if (box === "unchecked") {
+            // ☐
+            if (book_info) {
+                return false;
+            }
+        } else if (box === "checked") {
+            // 🗹
+            if (!book_info) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     function filter_book(book) {
         // Titles
         if (!book["title"].includes(document.getElementById("title-search").value)) {
@@ -118,40 +139,30 @@
             return false;
         }
 
-        // TODO: range
-        // if (!book["publication_year"].includes(document.getElementById("year-search").value)) {
-        //     return false;
-        // }
+        // Year
+        const book_year = book["publication_year"];
+        console.log(book_year);
+        const year_filter_inf_str = document.getElementById("year-search-inf").value;
+        const year_filter_inf = Number(year_filter_inf_str);
+        if (year_filter_inf_str !== "") {
+            if ((book_year === null) || (book_year < year_filter_inf)) {
+                return false;
+            }
+        }
 
-        // Comic
+        const year_filter_sup_str = document.getElementById("year-search-sup").value;
+        const year_filter_sup = Number(year_filter_sup_str);
+        if (year_filter_sup_str !== "") {
+            if ((book_year === null) || (book_year > year_filter_sup)) {
+                return false;
+            }
+        }
+
+        // Comic and read
         const boxComicState = document.getElementById("comic-check").dataset.state;
-        if (boxComicState === "unchecked") {
-            // ☐
-            if (book["comic"]) {
-                return false;
-            }
-        } else if (boxComicState === "checked") {
-            // 🗹
-            if (!book["comic"]) {
-                return false;
-            }
-        }
-
-        // Read
         const boxReadState = document.getElementById("read-check").dataset.state;
-        if (boxReadState === "unchecked") {
-            // ☐
-            if (book["read"]) {
-                return false;
-            }
-        } else if (boxReadState === "checked") {
-            // 🗹
-            if (!book["read"]) {
-                return false;
-            }
-        }
 
-        return true;
+        return filter_checks(boxComicState, book["comic"]) && filter_checks(boxReadState, book["read"]);
     }
 
     let unfiltered_books;
