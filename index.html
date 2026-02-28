@@ -216,6 +216,7 @@
                     authors_showed = all_authors.join(", ");
                 }
                 new_td.innerText = authors_showed;
+                new_td.setAttribute("title", all_authors.join(", "));
             }
             {
                 const new_td = document.createElement("TD");
