@@ -175,35 +175,24 @@
         const books = unfiltered_books.filter(filter_book);
 
         const maTable = document.getElementById("ma-table");
-        maTable.replaceChildren();
 
         const started = Date.now();
+        let newTable = "";
+
         for (let book of books) {
-            const new_tr = document.createElement("TR");
-            maTable.appendChild(new_tr);
+            newTable += "<tr>";
             {
-                const new_td = document.createElement("TD");
-                new_tr.appendChild(new_td);
+                newTable += "<td>";
                 const isbn = book["isbn"];
-
-                const new_anchor = document.createElement("A");
-                new_td.appendChild(new_anchor);
-                new_anchor.setAttribute("href", "https://covers.openlibrary.org/b/ISBN/" + isbn + "-L.jpg");
-
-                const new_image = document.createElement("IMG");
-                new_anchor.appendChild(new_image);
-                new_image.setAttribute("loading", "lazy");
-                new_image.setAttribute("src", "https://covers.openlibrary.org/b/ISBN/" + isbn + "-S.jpg");
-                new_image.setAttribute("height", "58px");
+                newTable += "<a href=\"https://covers.openlibrary.org/b/ISBN/" + isbn + "-L.jpg" + "\">";
+                newTable += "<img alt='cover' loading=\"lazy\" src=\"https://covers.openlibrary.org/b/ISBN/" + isbn + "-S.jpg" + "\" height='58px'>";
+                newTable += "</a>";
+                newTable += "</td>";
             }
+            newTable += "<td>";
+            newTable += book["title"];
+            newTable += "</td>";
             {
-                const new_td = document.createElement("TD");
-                new_tr.appendChild(new_td);
-                new_td.innerText = book["title"];
-            }
-            {
-                const new_td = document.createElement("TD");
-                new_tr.appendChild(new_td);
                 const all_authors = book["authors"];
                 let authors_showed;
                 if (all_authors.length > max_authors) {
@@ -211,43 +200,44 @@
                 } else {
                     authors_showed = all_authors.join(", ");
                 }
-                new_td.innerText = authors_showed;
-                new_td.setAttribute("title", all_authors.join(", "));
+                newTable += "<td title=\"" + all_authors.join(", ") + "\">";
+                newTable += authors_showed;
+                newTable += "</td>";
             }
+            newTable += "<td>";
+            newTable += book["genres"].join(", ");
+            newTable += "</td>";
+
+            newTable += "<td>";
+            newTable += book["publication_year"];
+            newTable += "</td>";
             {
-                const new_td = document.createElement("TD");
-                new_tr.appendChild(new_td);
-                new_td.innerText = book["genres"].join(", ");
-            }
-            {
-                const new_td = document.createElement("TD");
-                new_tr.appendChild(new_td);
-                new_td.innerText = book["publication_year"];
-            }
-            {
-                const new_td = document.createElement("TD");
-                new_tr.appendChild(new_td);
                 const is_comic = book["comic"];
+                newTable += "<td>";
                 if (is_comic) {
-                    new_td.innerHTML = "<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"checkCheckedDisabled\" aria-label=\"Not BD\" checked disabled>";
+                    newTable += "<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"checkCheckedDisabled\" aria-label=\"Not BD\" checked disabled>";
                 } else {
-                    new_td.innerHTML = "<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"checkDisabled\" aria-label=\"BD\" disabled>";
+                    newTable += "<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"checkDisabled\" aria-label=\"BD\" disabled>";
                 }
+                newTable += "</td>";
             }
             {
-                const new_td = document.createElement("TD");
-                new_tr.appendChild(new_td);
                 const is_read = book["read"];
+                newTable += "<td>";
                 if (is_read) {
-                    new_td.innerHTML = "<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"checkCheckedDisabled\" aria-label=\"Not Lu\" checked disabled>";
+                    newTable += "<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"checkCheckedDisabled\" aria-label=\"Not Lu\" checked disabled>";
                 } else {
-                    new_td.innerHTML = "<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"checkDisabled\" aria-label=\"Lu\" disabled>";
+                    newTable += "<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"checkDisabled\" aria-label=\"Lu\" disabled>";
                 }
+                newTable += "</td>";
             }
+
+            newTable +=  "</tr>";
         }
 
-        document.getElementById("footer").innerText = books.length;
+        maTable.innerHTML = newTable;
 
+        document.getElementById("footer").innerText = books.length;
         const elapsed = Date.now() - started;
         console.log(elapsed);
     }
