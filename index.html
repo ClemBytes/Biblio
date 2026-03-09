@@ -177,65 +177,83 @@
         const maTable = document.getElementById("ma-table");
 
         const started = Date.now();
-        let newTable = "";
+        let newTable = [];
 
         for (let book of books) {
-            newTable += "<tr>";
+            newTable.push("<tr>");
             {
-                newTable += "<td>";
+                newTable.push("<td>");
                 const isbn = book["isbn"];
-                newTable += "<a href=\"https://covers.openlibrary.org/b/ISBN/" + isbn + "-L.jpg" + "\">";
-                newTable += "<img alt='cover' loading=\"lazy\" src=\"https://covers.openlibrary.org/b/ISBN/" + isbn + "-S.jpg" + "\" height='58px'>";
-                newTable += "</a>";
-                newTable += "</td>";
+                newTable.push(
+                    "<a href=\"https://covers.openlibrary.org/b/ISBN/",
+                    isbn,
+                    "-L.jpg\">",
+                    "<img alt='cover' loading=\"lazy\" src=\"https://covers.openlibrary.org/b/ISBN/",
+                    isbn,
+                    "-S.jpg\" height='58px'>",
+                    "</a>",
+                    "</td>",
+                );
             }
-            newTable += "<td>";
-            newTable += book["title"];
-            newTable += "</td>";
+            newTable.push(
+                "<td>",
+                book["title"],
+                "</td>",
+            );
             {
                 const all_authors = book["authors"];
-                let authors_showed;
-                if (all_authors.length > max_authors) {
-                    authors_showed = all_authors.slice(0, max_authors).join(", ") + ", …";
-                } else {
-                    authors_showed = all_authors.join(", ");
+                newTable.push("<td title=\"");
+                for (const author of all_authors) {
+                    newTable.push(author, ", ");
                 }
-                newTable += "<td title=\"" + all_authors.join(", ") + "\">";
-                newTable += authors_showed;
-                newTable += "</td>";
+                newTable.push("\">");
+                if (all_authors.length > max_authors) {
+                    for (const author of all_authors.slice(0, max_authors)) {
+                        newTable.push(author, ", ");
+                    }
+                    newTable.push(", …");
+                } else {
+                    for (const author of all_authors) {
+                        newTable.push(author, ", ");
+                    }
+                }
+                newTable.push("</td>");
             }
-            newTable += "<td>";
-            newTable += book["genres"].join(", ");
-            newTable += "</td>";
-
-            newTable += "<td>";
-            newTable += book["publication_year"];
-            newTable += "</td>";
+            newTable.push("<td>");
+            for (const genre of book["genres"]) {
+                newTable.push(genre, ", ");
+            }
+            newTable.push(
+                "</td>",
+                "<td>",
+                book["publication_year"],
+                "</td>",
+            );
             {
                 const is_comic = book["comic"];
-                newTable += "<td>";
+                newTable.push("<td>");
                 if (is_comic) {
-                    newTable += "<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"checkCheckedDisabled\" aria-label=\"Not BD\" checked disabled>";
+                    newTable.push("<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"checkCheckedDisabled\" aria-label=\"Not BD\" checked disabled>");
                 } else {
-                    newTable += "<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"checkDisabled\" aria-label=\"BD\" disabled>";
+                    newTable.push("<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"checkDisabled\" aria-label=\"BD\" disabled>");
                 }
-                newTable += "</td>";
+                newTable.push("</td>");
             }
             {
                 const is_read = book["read"];
-                newTable += "<td>";
+                newTable.push("<td>");
                 if (is_read) {
-                    newTable += "<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"checkCheckedDisabled\" aria-label=\"Not Lu\" checked disabled>";
+                    newTable.push("<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"checkCheckedDisabled\" aria-label=\"Not Lu\" checked disabled>");
                 } else {
-                    newTable += "<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"checkDisabled\" aria-label=\"Lu\" disabled>";
+                    newTable.push("<input class=\"form-check-input\" type=\"checkbox\" value=\"\" id=\"checkDisabled\" aria-label=\"Lu\" disabled>");
                 }
-                newTable += "</td>";
+                newTable.push("</td>");
             }
 
-            newTable +=  "</tr>";
+            newTable.push("</tr>");
         }
 
-        maTable.innerHTML = newTable;
+        maTable.innerHTML = newTable.join("");
 
         document.getElementById("footer").innerText = books.length;
         const elapsed = Date.now() - started;
