@@ -89,19 +89,16 @@
 
         if (box.dataset.state === "unchecked") {
             // ☐ → -
-            // console.log("1");
             box.checked = false;
             box.indeterminate = true;
             box.dataset.state = "indeterminate";
         } else if (box.dataset.state === "indeterminate") {
             // - → 🗹
-            // console.log("2");
             box.checked = true;
             box.indeterminate = false;
             box.dataset.state = "checked";
         } else if (box.dataset.state === "checked") {
             // 🗹 → ☐
-            // console.log("3");
             box.checked = false;
             box.indeterminate = false;
             box.dataset.state = "unchecked";
@@ -146,7 +143,6 @@
 
         // Year
         const book_year = book["publication_year"];
-        console.log(book_year);
         const year_filter_inf_str = document.getElementById("year-search-inf").value;
         const year_filter_inf = Number(year_filter_inf_str);
         if (year_filter_inf_str !== "") {
