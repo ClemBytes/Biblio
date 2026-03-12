@@ -125,19 +125,19 @@
 
     function filter_book(book) {
         // Titles
-        if (!book["title"].includes(document.getElementById("title-search").value)) {
+        if (!book["title"].toLowerCase().includes(document.getElementById("title-search").value.toLowerCase())) {
             return false;
         }
 
         // Authors
-        const author_filter = document.getElementById("authors-search").value;
-        if (!book["authors"].some((author) => author.includes(author_filter))) {
+        const author_filter = document.getElementById("authors-search").value.toLowerCase();
+        if (!book["authors"].some((author) => author.toLowerCase().includes(author_filter))) {
             return false;
         }
 
         // Genres
-        const genres_filter = document.getElementById("genres-search").value;
-        if (!book["genres"].some((genre) => genre.includes(genres_filter))) {
+        const genres_filter = document.getElementById("genres-search").value.toLowerCase();
+        if (!book["genres"].some((genre) => genre.toLowerCase().includes(genres_filter))) {
             return false;
         }
 
