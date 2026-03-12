@@ -202,28 +202,24 @@
             );
             {
                 const all_authors = book["authors"];
-                newTable.push("<td title=\"");
-                for (const author of all_authors) {
-                    newTable.push(author, ", ");
-                }
-                newTable.push("\">");
+                newTable.push(
+                    "<td title=\"",
+                    all_authors.join(', '),
+                    "\">"
+                );
                 if (all_authors.length > max_authors) {
-                    for (const author of all_authors.slice(0, max_authors)) {
-                        newTable.push(author, ", ");
-                    }
-                    newTable.push(", …");
+                    newTable.push(
+                        all_authors.slice(0, max_authors).join(', '),
+                        ", …"
+                    );
                 } else {
-                    for (const author of all_authors) {
-                        newTable.push(author, ", ");
-                    }
+                    newTable.push(all_authors.join(', '));
                 }
                 newTable.push("</td>");
             }
-            newTable.push("<td>");
-            for (const genre of book["genres"]) {
-                newTable.push(genre, ", ");
-            }
             newTable.push(
+                "<td>",
+                book["genres"].join(", "),
                 "</td>",
                 "<td>",
                 book["publication_year"],
