@@ -166,13 +166,30 @@
         return filter_checks(boxComicState, book["comic"]) && filter_checks(boxReadState, book["read"]);
     }
 
+    function updateTable() {
+        const maTable = document.getElementById("ma-table");
+        const started = Date.now();
+        const children = maTable.children;
+        let nbBooks = 0;
+        for (let i = 0; i < children.length; i++) {
+            const show = filter_book(unfiltered_books[i]);
+            children[i].classList.toggle("d-none", !show);
+            if (show) {
+                nbBooks += 1;
+            }
+        }
+        document.getElementById("footer").innerText = nbBooks.toString();
+        const elapsed = Date.now() - started;
+        console.log(elapsed);
+    }
+
     let unfiltered_books;
 
-    function updateTable() {
+    function createTable() {
         if (unfiltered_books === undefined) {
             return;
         }
-        const books = unfiltered_books.filter(filter_book);
+        const books = unfiltered_books;
 
         const maTable = document.getElementById("ma-table");
 
@@ -251,7 +268,6 @@
 
         maTable.innerHTML = newTable.join("");
 
-        document.getElementById("footer").innerText = books.length;
         const elapsed = Date.now() - started;
         console.log(elapsed);
     }
@@ -259,6 +275,7 @@
     async function main() {
         const response = await fetch("books.json");
         unfiltered_books = await response.json();
+        createTable();
         updateTable();
     }
 
