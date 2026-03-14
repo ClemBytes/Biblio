@@ -171,11 +171,11 @@
     function updateTable() {
         const maTable = document.getElementById("ma-table");
         const started = Date.now();
-        const children = maTable.children;
         let nbBooks = 0;
-        for (let i = 0; i < children.length; i++) {
-            const show = filter_book(books[i]);
-            children[i].classList.toggle("d-none", !show);
+        for (const child of maTable.children) {
+            const bookIndex = Number(child.dataset.bookIndex);
+            const show = filter_book(books[bookIndex]);
+            child.classList.toggle("d-none", !show);
             if (show) {
                 nbBooks += 1;
             }
@@ -195,8 +195,8 @@
         const started = Date.now();
         let newTable = [];
 
-        for (let book of books) {
-            newTable.push("<tr>");
+        for (let [i, book] of books.entries()) {
+            newTable.push("<tr data-book-index='", i, "'>");
             {
                 newTable.push("<td>");
                 const isbn = book["isbn"];
