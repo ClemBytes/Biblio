@@ -166,13 +166,15 @@
         return filter_checks(boxComicState, book["comic"]) && filter_checks(boxReadState, book["read"]);
     }
 
+    let books;
+
     function updateTable() {
         const maTable = document.getElementById("ma-table");
         const started = Date.now();
         const children = maTable.children;
         let nbBooks = 0;
         for (let i = 0; i < children.length; i++) {
-            const show = filter_book(unfiltered_books[i]);
+            const show = filter_book(books[i]);
             children[i].classList.toggle("d-none", !show);
             if (show) {
                 nbBooks += 1;
@@ -183,13 +185,10 @@
         console.log(elapsed);
     }
 
-    let unfiltered_books;
-
     function createTable() {
-        if (unfiltered_books === undefined) {
+        if (books === undefined) {
             return;
         }
-        const books = unfiltered_books;
 
         const maTable = document.getElementById("ma-table");
 
@@ -274,7 +273,7 @@
 
     async function main() {
         const response = await fetch("books.json");
-        unfiltered_books = await response.json();
+        books = await response.json();
         createTable();
         updateTable();
     }
