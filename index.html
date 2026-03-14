@@ -49,10 +49,10 @@
                 </div>
             </td>
             <td>
-                <input type="checkbox" class="form-check-input" id="comic-check" data-state="indeterminate" oninput="updateComicCheck(event, id='comic-check')">
+                <input type="checkbox" class="form-check-input" id="comic-check" data-state="indeterminate" oninput="updateCheck(event, id='comic-check')">
             </td>
             <td>
-                <input type="checkbox" class="form-check-input" id="read-check" data-state="indeterminate" oninput="updateComicCheck(event, id='read-check')">
+                <input type="checkbox" class="form-check-input" id="read-check" data-state="indeterminate" oninput="updateCheck(event, id='read-check')">
             </td>
         </tr>
     </thead>
@@ -82,7 +82,7 @@
     boxRead.checked = false;
     boxRead.indeterminate = true;
 
-    function updateComicCheck(event, id) {
+    function updateCheck(event, id) {
         event.preventDefault();
 
         let box = document.getElementById(id);
