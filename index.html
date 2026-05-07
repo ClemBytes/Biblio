@@ -140,19 +140,43 @@
         return compCol(1, false, tra, trb);
     }
 
+    function compTitlesR(tra, trb) {
+        const tr1 = trb;
+        const tr2 = tra;
+        return compCol(1, false, tr1, tr2);
+    }
+
     function compAuthors(tra, trb) {
         return compCol(2, false, tra, trb);
+    }
+
+    function compAuthorsR(tra, trb) {
+        const tr1 = trb;
+        const tr2 = tra;
+        return compCol(2, false, tr1, tr2);
     }
 
     function compGenres(tra, trb) {
         return compCol(3, false, tra, trb);
     }
 
+    function compGenresR(tra, trb) {
+        const tr1 = trb;
+        const tr2 = tra;
+        return compCol(3, false, tr1, tr2);
+    }
+
     function compYears(tra, trb) {
         return compCol(4, true, tra, trb);
     }
 
-    function sortTable(colName) {
+    function compYearsR(tra, trb) {
+        const tr1 = trb;
+        const tr2 = tra;
+        return compCol(4, true, tr1, tr2);
+    }
+
+    function sortTableOrdered(colName) {
         let rows = Array.from(document.getElementById("ma-table").children);
 
         if (colName === "titles") {
@@ -163,6 +187,22 @@
             rows.sort(compGenres);
         } else if (colName === "years") {
             rows.sort(compYears);
+        }
+
+        document.getElementById("ma-table").replaceChildren(...rows);
+    }
+
+    function sortTableReversed(colName) {
+        let rows = Array.from(document.getElementById("ma-table").children);
+
+        if (colName === "titles") {
+            rows.sort(compTitlesR);
+        } else if (colName === "authors") {
+            rows.sort(compAuthorsR);
+        } else if (colName === "genres") {
+            rows.sort(compGenresR);
+        } else if (colName === "years") {
+            rows.sort(compYearsR);
         }
 
         document.getElementById("ma-table").replaceChildren(...rows);
@@ -209,6 +249,7 @@
                     beUndefined(other_id);
                 }
             }
+            sortTableOrdered(id);
         } else if (sortTh.dataset.sortstate === "ordered") {
             // ordered -> REVERSED
             beReversed(id);
@@ -217,12 +258,11 @@
                     beUndefined(other_id);
                 }
             }
+            sortTableReversed(id);
         } else if (sortTh.dataset.sortstate === "reversed") {
             // reversed -> UNDEFINED
             beUndefined(id);
         }
-
-        sortTable(id);
     }
 
     // Max number of authors showed
