@@ -168,34 +168,61 @@
         document.getElementById("ma-table").replaceChildren(...rows);
     }
 
+    function beOrdered(id) {
+        let sortTh = document.getElementById(id + "-title");
+        sortTh.dataset.sortstate = "ordered";
+        document.getElementById("nosort-" + id).classList.add("d-none");
+        document.getElementById("ordered-" + id).classList.remove("d-none");
+        document.getElementById("reversed-" + id).classList.add("d-none");
+    }
+
+    function beReversed(id) {
+        let sortTh = document.getElementById(id + "-title");
+        sortTh.dataset.sortstate = "reversed";
+        document.getElementById("nosort-" + id).classList.add("d-none");
+        document.getElementById("ordered-" + id).classList.add("d-none");
+        document.getElementById("reversed-" + id).classList.remove("d-none");
+    }
+
+    function beUndefined(id) {
+        let sortTh = document.getElementById(id + "-title");
+        sortTh.dataset.sortstate = "undefined";
+        document.getElementById("nosort-" + id).classList.remove("d-none");
+        document.getElementById("ordered-" + id).classList.add("d-none");
+        document.getElementById("reversed-" + id).classList.add("d-none");
+    }
+
     // Initialize sort states
     const all_ids = ["titles", "authors", "genres", "years"];
     for (const id of all_ids) {
-        document.getElementById(id + "-title").dataset.sortstate = "undefined";
+        beUndefined(id);
     }
 
     function updateSortState(id) {
         let sortTh = document.getElementById(id + "-title");
 
         if (sortTh.dataset.sortstate === "undefined") {
-            sortTh.dataset.sortstate = "ordered";
-            document.getElementById("nosort-" + id).classList.add("d-none");
-            document.getElementById("ordered-" + id).classList.remove("d-none");
-            document.getElementById("reversed-" + id).classList.add("d-none");
+            // undefined -> ORDERED
+            beOrdered(id);
+            for (const other_id of all_ids) {
+                if (other_id !== id) {
+                    beUndefined(other_id);
+                }
+            }
         } else if (sortTh.dataset.sortstate === "ordered") {
-            sortTh.dataset.sortstate = "reversed";
-            document.getElementById("nosort-" + id).classList.add("d-none");
-            document.getElementById("ordered-" + id).classList.add("d-none");
-            document.getElementById("reversed-" + id).classList.remove("d-none");
+            // ordered -> REVERSED
+            beReversed(id);
+            for (const other_id of all_ids) {
+                if (other_id !== id) {
+                    beUndefined(other_id);
+                }
+            }
         } else if (sortTh.dataset.sortstate === "reversed") {
-            sortTh.dataset.sortstate = "undefined";
-            document.getElementById("nosort-" + id).classList.remove("d-none");
-            document.getElementById("ordered-" + id).classList.add("d-none");
-            document.getElementById("reversed-" + id).classList.add("d-none");
+            // reversed -> UNDEFINED
+            beUndefined(id);
         }
 
         sortTable(id);
-        console.log(sortTh);
     }
 
     // Max number of authors showed
