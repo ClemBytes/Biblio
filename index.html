@@ -7,8 +7,8 @@
 <!--Center book covers-->
 <style>td:first-child {text-align: center;}</style>
 
-<table class="table table-hover table-dark table-striped">
-    <thead>
+<table class="table table-hover table-dark table-striped table-sm">
+    <thead class="sticky-top table-light">
         <tr>
             <th scope="col"></th>
             <th style="cursor: pointer;" scope="col" id="titles-title" data-sortstate="undefined" onclick="updateSortState('titles')" onkeydown="updateSortState('titles')">
@@ -107,12 +107,17 @@
     </thead>
     <tbody id="ma-table">
     </tbody>
-    <tfoot>
+    <tfoot class="sticky-bottom table-light">
         <tr>
+            <th id=""></th>
             <th scope="col">
                 Nb lines
             </th>
             <th id="footer"></th>
+            <th id=""></th>
+            <th id=""></th>
+            <th id=""></th>
+            <th id=""></th>
         </tr>
     </tfoot>
 </table>
