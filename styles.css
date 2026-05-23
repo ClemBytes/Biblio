@@ -1,6 +1,7 @@
 h1 {
     background-image: url('data/header-background.jpg');
     background-position: center;
+    background-size: cover;
     position: sticky;
     top: 0;
     z-index: 1020;
