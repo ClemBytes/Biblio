@@ -4,14 +4,28 @@
 <link rel="icon" type="image/png" href="data/books2.png"/>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
-<h1 style="background-image: url('data/library.jpg'); background-position: center; position: sticky; top: 0; font-family: Snell Roundhand, cursive; font-size: 50px; font-weight: bold; text-align: center; text-shadow: 0 0 2px #fff;">Mes Livres</h1>
+<h1
+        style="
+        background-image: url('data/library.jpg');
+        background-position: center;
+        position: sticky;
+        top: 0;
+        z-index: 1020;
+        font-family: Snell Roundhand, cursive;
+        font-size: 50px;
+        font-weight: bold;
+        text-align: center;
+        text-shadow: 0 0 1px #fff;
+        margin-bottom: 0;
+        "
+>Bibliothèque de Clémentine</h1>
 
 
 <!--Center book covers-->
 <style>td:first-child {text-align: center;}</style>
 
-<table class="table table-hover table-dark table-striped table-sm">
-    <thead class="table-light" style="position: sticky; top: 55px;">
+<table class="table table-hover table-dark table-striped table-sm" style="position: sticky; top: 60px">
+    <thead class="table-dark" style="position: sticky; top: 60px; z-index: 1020;">
         <tr>
             <th scope="col"></th>
             <th style="cursor: pointer;" scope="col" id="titles-title" data-sortstate="undefined" onclick="updateSortState('titles')" onkeydown="updateSortState('titles')">
@@ -94,9 +108,8 @@
             </td>
             <td>
                 <div class="input-group">
-                    <span class="input-group-text">Entre </span>
                     <input type="number" class="form-control" id="year-search-inf" aria-label="apres" oninput="updateTable()">
-                    <span class="input-group-text"> et </span>
+                    <span class="input-group-text"> à </span>
                     <input type="number" class="form-control" id="year-search-sup" aria-label="avant" oninput="updateTable()">
                 </div>
             </td>
