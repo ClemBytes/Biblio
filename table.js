@@ -272,17 +272,46 @@ function updateTable() {
     console.log(elapsed);
 }
 
-function createTable() {
+function filterWishlist(kind) {
+    if (kind === "possessed") {
+        return books.filter(book => book.owned);
+    } else if (kind === "wishlist") {
+        return books.filter(book => !book.owned);
+    }
+}
+
+function changeTab(tabName) {
+    const tab = document.getElementById(tabName + "-tab");
+    if (tab.classList.contains("active")) {
+        return;
+    }
+
+    let otherTab;
+    if (tabName === "possessed") {
+        otherTab = document.getElementById("wishlist-tab");
+    } else if (tabName === "wishlist") {
+        otherTab = document.getElementById("possessed-tab");
+    }
+
+    tab.classList.toggle("active");
+    otherTab.classList.toggle("active");
+
+    createTable(tabName);
+    updateTable();
+}
+
+function createTable(kind) {
     if (books === undefined) {
         return;
     }
+    const filteredBooks = filterWishlist(kind);
 
     const maTable = document.getElementById("ma-table");
 
     const started = Date.now();
     let newTable = [];
 
-    for (let [i, book] of books.entries()) {
+    for (let [i, book] of filteredBooks.entries()) {
         newTable.push("<tr data-book-index='", i, "'>");
         {
             newTable.push("<td>");
@@ -361,7 +390,7 @@ function createTable() {
 async function main() {
     const response = await fetch("books.json");
     books = await response.json();
-    createTable();
+    createTable("possessed");
     updateTable();
 }
 
