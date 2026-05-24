@@ -1,10 +1,4 @@
 h1 {
-    background-image: url('data/header-background.jpg');
-    background-position: center;
-    background-size: cover;
-    position: sticky;
-    top: 0;
-    z-index: 1020;
     font-family: Snell Roundhand, cursive;
     font-size: 50px;
     font-weight: bold;
@@ -18,11 +12,20 @@ td:first-child {text-align: center;}
 
 table {
     position: sticky;
-    top: 60px;
+    top: 102px;
 }
 
 thead {
     position: sticky;
-    top: 60px;
+    top: 102px;
+    z-index: 1020;
+}
+
+.container-title-tabs {
+    background-image: url('data/header-background.jpg');
+    background-position: center;
+    background-size: cover;
+    position: sticky;
+    top: 0;
     z-index: 1020;
 }
