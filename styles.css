@@ -40,3 +40,12 @@ thead {
 #covers-column {
     width: 66px;
 }
+
+.modal-content {
+    background-color: var(--bs-body-color);
+    border-color: white;
+}
+
+.modal-title, .modal-body {
+    color: white;
+}

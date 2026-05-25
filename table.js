@@ -314,14 +314,11 @@ function createTable(kind) {
     let newTable = [];
 
     for (let [i, book] of filteredBooks.entries()) {
-        newTable.push("<tr data-book-index='", i, "'>");
+        newTable.push("<tr data-book-index='", i, "' data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\">");
         {
             newTable.push("<td>");
             const isbn = book["isbn"];
             newTable.push(
-                "<a href=\"https://covers.openlibrary.org/b/ISBN/",
-                isbn,
-                "-L.jpg\">",
                 "<img alt='cover' loading=\"lazy\" src=\"https://covers.openlibrary.org/b/ISBN/",
                 isbn,
                 "-S.jpg\" height='58px'>",
