@@ -36,3 +36,7 @@ thead {
     opacity: 0.5;
     color: black;
 }
+
+#covers-column {
+    width: 66px;
+}
