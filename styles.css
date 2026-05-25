@@ -29,3 +29,10 @@ thead {
     top: 0;
     z-index: 1020;
 }
+
+.nav-link.inactive {
+    border-color: white;
+    background-color: white;
+    opacity: 0.5;
+    color: black;
+}

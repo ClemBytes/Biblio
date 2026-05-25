@@ -294,7 +294,9 @@ function changeTab(tabName) {
     }
 
     tab.classList.toggle("active");
+    tab.classList.toggle("inactive");
     otherTab.classList.toggle("active");
+    otherTab.classList.toggle("inactive");
 
     createTable(tabName);
     updateTable();
