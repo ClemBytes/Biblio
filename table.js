@@ -254,6 +254,7 @@ function filter_book(book) {
 }
 
 let books;
+let filteredBooks;
 
 function updateTable() {
     const maTable = document.getElementById("ma-table");
@@ -302,11 +303,20 @@ function changeTab(tabName) {
     updateTable();
 }
 
+function updateModal(bookIndex) {
+    const book = filteredBooks[bookIndex];
+    const isbn = book["isbn"];
+    const modalTitle = document.getElementById("modalTitle");
+    modalTitle.innerText = book["title"];
+    const modalBody = document.getElementById("modalBody");
+    modalBody.innerHTML = "<img alt='cover' src=\"https://covers.openlibrary.org/b/ISBN/" + isbn + "-L.jpg\">";
+}
+
 function createTable(kind) {
     if (books === undefined) {
         return;
     }
-    const filteredBooks = filterWishlist(kind);
+    filteredBooks = filterWishlist(kind);
 
     const maTable = document.getElementById("ma-table");
 
@@ -314,7 +324,7 @@ function createTable(kind) {
     let newTable = [];
 
     for (let [i, book] of filteredBooks.entries()) {
-        newTable.push("<tr data-book-index='", i, "' data-bs-toggle=\"modal\" data-bs-target=\"#exampleModal\">");
+        newTable.push("<tr data-book-index='", i, "' data-bs-toggle=\"modal\" data-bs-target=\"#modalBox\" onclick=\"updateModal(" + i + ")\">");
         {
             newTable.push("<td>");
             const isbn = book["isbn"];
