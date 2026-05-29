@@ -306,10 +306,24 @@ function changeTab(tabName) {
 function updateModal(bookIndex) {
     const book = filteredBooks[bookIndex];
     const isbn = book["isbn"];
+    const title = book["title"];
+    const authors = book["authors"];
+    const genres = book["genres"];
+    const book_year = book["publication_year"];
+    const comic = book["comic"];
+    const read = book["read"];
+
     const modalTitle = document.getElementById("modalTitle");
-    modalTitle.innerText = book["title"];
+    modalTitle.innerText = title;
+
     const modalBody = document.getElementById("modalBody");
-    modalBody.innerHTML = "<img alt='cover' src=\"https://covers.openlibrary.org/b/ISBN/" + isbn + "-L.jpg\">";
+    modalBody.innerHTML = "" +
+        "<img alt='cover' src=\"https://covers.openlibrary.org/b/ISBN/" + isbn + "-L.jpg\">" +
+        "<div>Auteur/autrice(s) : " + authors.join(', ') + "</div>" +
+        "<div>Genre(s) : " + genres.join(', ') + "</div>" +
+        "<div>Publié en : " + book_year + "</div>" +
+        "<div>BD ? " + comic + "</div>" +
+        "<div>Lu ? " + read + "</div>";
 }
 
 function createTable(kind) {
